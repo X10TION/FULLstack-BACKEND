@@ -26,7 +26,11 @@ const userSchema = new Schema({
     },
     profilePicture:{
         type:String
-    }
+    },
+    createdOn: { type: Date, default: Date.now },
+    modifiedOn: Date,
+    lastLogin: Date,
+    accountype:String
 },{
     timestamps: true
 })

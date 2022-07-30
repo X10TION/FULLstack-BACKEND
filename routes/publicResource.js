@@ -6,7 +6,7 @@ const router = express.Router()
 router.post("/public", upload.single('attach'), created)
 router.get('/public', viewed)
 router.get('/public/:department', filtered )
-router.put('/public/id', edited)
+router.put('/public/:id', edited)
 router.delete('/public/:id', deleted)
 router.get('/public/:id', single)
 

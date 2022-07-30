@@ -2,7 +2,8 @@ const User = require('../model/User')
 const bcrypt = require('bcryptjs')
 const { findOne } = require('../model/User')
 const jwt = require('jsonwebtoken')
-const JWT_SCRET_KEY = "MYKEY"
+
+
 const register = async (req, res, next) => {
     const { reg, fullname, department, password, accounttype, email } = req.body
     let existingUser
@@ -22,8 +23,12 @@ const register = async (req, res, next) => {
             password,
             accounttype,
             email,
-            password:hashPassword
+            password:hashPassword,
+            createdOn:Date.now(),
+           
     })
+        user.modifiedOn = Date.now(),
+        user.lastLogin = Date.now()
     if(req.file){
         user.profilePicture = req.file.path
     }
@@ -32,7 +37,9 @@ const register = async (req, res, next) => {
     }catch(err){
         console.log(err)
     }
-    return res.status(201).json({message : user})   
+    // await res.redirect('/login')
+    await res.status(201).json({message : user})   
+    
 }
 
 const login = async(req, res, next) => {
@@ -50,36 +57,19 @@ const login = async(req, res, next) => {
     if(!isexistUser){
         return res.status(400).json({msg: "Invalid reg and  password.."})
     }else{
-    // const user = await User.findOne({reg})
-    const token = jwt.sign({id: isexistUser._id},JWT_SCRET_KEY,{
-        expiresIn: "5hr"
-    })
-    return res.status(200).json({
-        msg: "Successfully Login",
-        user: existingUser,
-        token
-    })
-}
+        const user = await User.find({reg})
+        res.status(200).json(user)
+    }
+    // return res.status(200).json({
+    //     msg: "Successfully Login",
+    //     user: existingUser, 
+    // })
 }
 
-const verifyToken = (req, res, next) => {
-    const headers = req.headers[`authorization`];
-    console.log(headers);
-    const token = headers.split(" ")[1];
-    console.log(token);
-    if(!token){
-        res.status(404).json({mgs: "NO TOKEN FOUND FOR USER"})
-    }
-    jwt.verify(token, JWT_SCRET_KEY, (err, user) => {
-        if(err){
-            return res.status(400).json({msg: "INVALIDE TOKEN"})
-        }
-        console.log(id);
-    //      req.id = user.id
-    });
-    // next()
-};
+
+//     // next()
+// };
 // const home = async(req, res, next) => {}
 exports.register = register
 exports.login = login
-exports.verifyToken = verifyToken
+// exports.verifyToken = verifyToken

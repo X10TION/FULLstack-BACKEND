@@ -1,13 +1,14 @@
 const publicResource =  require('../model/public')
 //////////////////// ???SINGLE??? ////////////////////////////
 const created = async (req,res) =>{
-    const {title, department, school, description, created } = req.body
+    const {title, department, school, description, createdBy } = req.body
     const publicArea = new publicResource({
         title, 
         department,
         school,
         description,
-        createdBy
+        createdBy,
+        
     })
     if(req.file){
         publicArea.attach = req.file.path
@@ -24,7 +25,7 @@ const created = async (req,res) =>{
 }
 /////////////////////////???? VIEW RESOURCE ?????///////////////////////////////////
 const viewed = (req,res) =>{
-    publicResource.find({}).limit(40).sort({createAt: 1}).exec((err, posts) =>{
+    publicResource.find().limit(40).sort({createAt: 1}).exec((err, posts) =>{
         if(err) console.log(err);
         res.json(posts)
     })
