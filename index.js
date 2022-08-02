@@ -25,11 +25,11 @@ app.use(cors())
 app.use('/api/v1', courses)
 app.use('/api/v1', router)
 app.use('/api/v1', public)
-
 //
+const port = process.env.PORT || 4001
 mongoose.connect("mongodb+srv://MAUCES:MAUCES@cluster0.bwdex.mongodb.net/?retryWrites=true&w=majority")
 .then(() =>{
-    app.listen(5000, () => {
+    app.listen(port, () => {
         console.log("Database is initializing  from mongodb cloud..")
         console.log("Server is initializing  to port 500...")
     })
