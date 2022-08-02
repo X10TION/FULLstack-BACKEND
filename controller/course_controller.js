@@ -1,7 +1,7 @@
 const courses = require('../model/courses.model')
 
 ///// create course
-exports.createcourse = async(req, res) => {
+exports.createCourse = async(req, res) => {
     const { courseTitle, createdBy,reg,courseCode,department,courseContent,classType } = req.body
     // console.log(req.body)
     let existingCourse
@@ -86,8 +86,3 @@ exports.lectureJointed = async(req, res) => {
     
 }
 
-exports.lectureCreated = async(req, res) => {
-    
-}
-
-exports.material = async(req, res) => {}

@@ -5,8 +5,8 @@ const Schema = mongoose.Schema
 const userSchema = new Schema({
     reg:{
         type:String,
-    // unique: [true, "reg must be a unique field"],
-   // require: [true, 'please provide you student registration id']
+        unique: [true, "reg must be a unique field"],
+        require: [true, 'please provide you student registration id']
     },
     fullname:{
             type:String

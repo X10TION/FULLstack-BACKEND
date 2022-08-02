@@ -10,8 +10,9 @@ const coursesSchema =  new Schema({
     classType:String,
     createdBy:String,
     reg:String,
-    createdLecture:Array,
-    joined:Array
+    // createdLecture:Array,
+    joined:Array,
+    // lectureUnderCourseId:{type: mongoose.Schema.Types.ObjectId, ref: 'Lecture'}
 
 })
 module.exports = mongoose.model('courses', coursesSchema)

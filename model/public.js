@@ -8,7 +8,8 @@ const publicSchema = new Schema({
     school: String,
     description: String,
     attach:String,
-    createdBy:String
+    createdBy:{type: mongoose.Schema.Types.ObjectId, ref: 'User'},
+    
 },{
     timestamps: true
 })

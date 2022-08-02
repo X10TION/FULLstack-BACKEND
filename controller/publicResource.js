@@ -7,8 +7,7 @@ const created = async (req,res) =>{
         department,
         school,
         description,
-        createdBy,
-        
+        createdBy,        
     })
     if(req.file){
         publicArea.attach = req.file.path
@@ -25,7 +24,7 @@ const created = async (req,res) =>{
 }
 /////////////////////////???? VIEW RESOURCE ?????///////////////////////////////////
 const viewed = (req,res) =>{
-    publicResource.find().limit(40).sort({createAt: 1}).exec((err, posts) =>{
+    publicResource.find().populate('createdBy','fullname department profilePicture').sort({createAt: 1}).exec((err, posts) =>{
         if(err) console.log(err);
         res.json(posts)
     })
@@ -34,7 +33,7 @@ const viewed = (req,res) =>{
 const single = (req, res) => {
         const { id } = req.params
         console.log(req.params.id)
-        publicResource.findOne({_id:id})
+        publicResource.findOne({_id:id}).populate('createdBy', 'fullnam department profilePicture')
           .exec((err, publicResource) =>{
             if(err) console.log(err);
             res.json(publicResource)
